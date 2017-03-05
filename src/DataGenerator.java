@@ -1,6 +1,3 @@
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -10,19 +7,8 @@ import java.util.Random;
  */
 public class DataGenerator {
     public void generateDate(String fileName, int numToGenerate) {
-        writeDataToFile(fileName, generateRandomInts(numToGenerate));
-    }
-
-    private void writeDataToFile(String fileName, List<Integer> data) {
-        try {
-            BufferedWriter bf = new BufferedWriter(new FileWriter(new File(fileName)));
-            for (int item: data) {
-                bf.write(String.format("%d\n", item));
-            }
-            bf.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        String serializedList = ListUtils.serialize(generateRandomInts(numToGenerate));
+        FileUtils.writeToFile(fileName, serializedList);
     }
 
     private List<Integer> generateRandomInts(int total) {
