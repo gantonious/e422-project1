@@ -1,6 +1,4 @@
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
+import java.io.*;
 
 /**
  * Created by George on 2017-03-05.
@@ -16,7 +14,19 @@ public class FileUtils {
         }
     }
 
+    // From: http://stackoverflow.com/a/5445161
     public static String readFileContents(String fileName) {
-        return "";
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(fileName));
+
+            java.util.Scanner s = new java.util.Scanner(br).useDelimiter("\\A");
+            String content = s.hasNext() ? s.next() : "";
+
+            br.close();
+
+            return content;
+        } catch (Exception e) {
+            return "";
+        }
     }
 }
