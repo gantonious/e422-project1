@@ -19,7 +19,6 @@ JNIEXPORT void JNICALL Java_BackupDataSort_sort
     prepare_sort((double) failure_rate);
     insertion_sort(array, length);
 
-
     (*env)->SetIntArrayRegion(env, data, 0, (jsize) length, (jint*) array);
 }
 
@@ -56,18 +55,15 @@ void swap(int *data, int index1, int index2) {
 void insertion_sort(int *data, int length) {
     for (int i = 0; i < length; i++) {
         int item_value = get_from(data, i);
-        int lowest_greater_position = i;
+        int compare_index = i;
 
-        while (lowest_greater_position > 0) {
-            if (get_from(data, lowest_greater_position) > item_value) {
-                lowest_greater_position--;
+        while (compare_index > 0) {
+            if (get_from(data, compare_index - 1) > item_value) {
+                swap(data, compare_index - 1, compare_index);
+                compare_index--;
             } else {
                 break;
             }
-        }
-
-        if (lowest_greater_position != i) {
-            swap(data, i, lowest_greater_position);
         }
     }
 }
