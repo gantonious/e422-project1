@@ -4,8 +4,9 @@
 public class Driver {
     public static void main(String[] args) {
         DataGenerator dataGenerator = new DataGenerator();
-        PrimaryDataSorter dataSorter = new PrimaryDataSorter();
+        Sorter dataSorter = new BackupDataSort();
 
+        System.loadLibrary("InsertionSort");
 
         dataGenerator.generateDate("test.txt", 200);
         int[] inputArray = loadInputArray("test.txt");
