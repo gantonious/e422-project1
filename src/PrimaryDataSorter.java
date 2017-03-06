@@ -35,11 +35,16 @@ public class PrimaryDataSorter implements DataSorter {
         return memoryAccesses * failureRate;
     }
 
-    private void testMemory() {
+    // from: http://stackoverflow.com/a/6078211
+    private double randomDouble(double bound) {
         Random random = new Random(System.currentTimeMillis());
-        int randInt = random.nextInt(1);
+        return bound * random.nextFloat();
+    }
 
-        if (randInt >= 0.5 && randInt <= 0.5 + getMemoryFailureHazard()) {
+    private void testMemory() {
+        double randDouble = randomDouble(1.0);
+
+        if (randDouble >= 0.5 && randDouble <= 0.5 + getMemoryFailureHazard()) {
             throw new MemoryFailureException();
         }
     }
