@@ -79,7 +79,7 @@ public class PrimaryDataSorter implements DataSorter {
     }
 
     private void heapify(int[] input, int endIndex) {
-        for (int i = 0; i < input.length / 2; i++) {
+        for (int i = input.length; i >= 0; i--) {
             fixDown(input, i, endIndex);
         }
     }
