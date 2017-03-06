@@ -7,16 +7,16 @@ import java.util.Random;
  */
 public class DataGenerator {
     public void generateDate(String fileName, int numToGenerate) {
-        String serializedList = ListUtils.serialize(generateRandomInts(numToGenerate));
+        String serializedList = ArrayUtils.serialize(generateRandomInts(numToGenerate));
         FileUtils.writeToFile(fileName, serializedList);
     }
 
-    private List<Integer> generateRandomInts(int total) {
-        List<Integer> output = new ArrayList<>();
+    private int[] generateRandomInts(int total) {
+        int[] output = new int[total];
         Random rnd = new Random(System.currentTimeMillis());
 
         for (int i = 0; i < total; i++) {
-            output.add(rnd.nextInt());
+            output[i] = rnd.nextInt();
         }
 
         return output;
