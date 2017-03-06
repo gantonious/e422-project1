@@ -3,32 +3,19 @@ import java.util.Random;
 /**
  * Created by George on 2017-03-04.
  */
-public class PrimaryDataSorter implements DataSorter {
+public class PrimaryDataSorter implements Sorter {
     private int memoryAccesses;
     private double failureRate;
 
     @Override
-    public void sort(String inputFile, String outputFile, double failureRate) {
+    public void sort(int data[], double failureRate) {
         prepareForSorting(failureRate);
-
-        int[] data = loadInputArray(inputFile);
         sortData(data);
-        writeOutputArray(outputFile, data);
     }
 
     private void prepareForSorting(double failureRate) {
         this.memoryAccesses = 0;
         this.failureRate = failureRate;
-    }
-
-    private int[] loadInputArray(String inputFile) {
-        String inputList = FileUtils.readFileContents(inputFile);
-        return ArrayUtils.deserialize(inputList);
-    }
-
-    private void writeOutputArray(String outputFile, int[] outputList) {
-        String serializedList = ArrayUtils.serialize(outputList);
-        FileUtils.writeToFile(outputFile, serializedList);
     }
 
     private double getMemoryFailureHazard() {

@@ -6,7 +6,20 @@ public class Driver {
         DataGenerator dataGenerator = new DataGenerator();
         PrimaryDataSorter dataSorter = new PrimaryDataSorter();
 
+
         dataGenerator.generateDate("test.txt", 200);
-        dataSorter.sort("test.txt", "sortedTest.txt", 2);
+        int[] inputArray = loadInputArray("test.txt");
+        dataSorter.sort(inputArray, 2);
+        writeOutputArray("sortedTest.txt", inputArray);
+    }
+
+    private static int[] loadInputArray(String inputFile) {
+        String inputList = FileUtils.readFileContents(inputFile);
+        return ArrayUtils.deserialize(inputList);
+    }
+
+    private static void writeOutputArray(String outputFile, int[] outputList) {
+        String serializedList = ArrayUtils.serialize(outputList);
+        FileUtils.writeToFile(outputFile, serializedList);
     }
 }
