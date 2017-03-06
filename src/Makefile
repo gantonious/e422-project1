@@ -1,12 +1,16 @@
 NATIVECLASSNAME = BackupDataSort
-LIBNAME = libInsertionSort.dylib
+LIBNAME = libInsertionSort
 LIBSOURCE = insertionsort.c
 
-all:
+darwin:
 	javac *.java
 	javah $(NATIVECLASSNAME)
-	gcc -I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/darwin -shared -fpic -o $(LIBNAME) $(LIBSOURCE)
-	export LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):.
+	gcc -I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/darwin -shared -fpic -o $(LIBNAME).dylib $(LIBSOURCE)
+
+linux:
+	javac *.java
+	javah $(NATIVECLASSNAME)
+	gcc -I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/linux -shared -fpic -o $(LIBNAME).so $(LIBSOURCE)/
 
 clean:
-	rm -f *.class $(NATIVECLASSNAME).h $(LIBNAME)
+	rm -f *.class $(NATIVECLASSNAME).h *.dylib *.so
