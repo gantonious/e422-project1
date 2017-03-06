@@ -1,4 +1,3 @@
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -11,9 +10,10 @@ public class PrimaryDataSorter implements DataSorter {
     @Override
     public void sort(String inputFile, String outputFile, double failureRate) {
         prepareForSorting(failureRate);
-        int[] inputData = loadInputList(inputFile);
-        int[] sortedData = sortData(inputData);
-        writeOutputList(outputFile, sortedData);
+
+        int[] data = loadInputArray(inputFile);
+        sortData(data);
+        writeOutputArray(outputFile, data);
     }
 
     private void prepareForSorting(double failureRate) {
@@ -21,12 +21,12 @@ public class PrimaryDataSorter implements DataSorter {
         this.failureRate = failureRate;
     }
 
-    private int[] loadInputList(String inputFile) {
+    private int[] loadInputArray(String inputFile) {
         String inputList = FileUtils.readFileContents(inputFile);
         return ArrayUtils.deserialize(inputList);
     }
 
-    private void writeOutputList(String outputFile, int[] outputList) {
+    private void writeOutputArray(String outputFile, int[] outputList) {
         String serializedList = ArrayUtils.serialize(outputList);
         FileUtils.writeToFile(outputFile, serializedList);
     }
@@ -62,18 +62,43 @@ public class PrimaryDataSorter implements DataSorter {
         setTo(data, index2, temp);
     }
 
-    private int[] sortData(int[] inputData) {
-        return inputData;
-    }
+    private void sortData(int[] inputData) {
+        int endIndex = inputData.length - 1;
+        heapify(inputData, endIndex);
 
-    private void heapify(int[] input) {
-        for (int i = 0; i < input.length; i++) {
-
+        while (endIndex > 0) {
+            swap(inputData, 0, endIndex);
+            endIndex -= 1;
+            fixDown(inputData, 0, endIndex);
         }
     }
 
-    private void fixDown(List<Integer> input, int index, int endIndex) {
+    private void heapify(int[] input, int endIndex) {
+        for (int i = 0; i < input.length / 2; i++) {
+            fixDown(input, i, endIndex);
+        }
+    }
 
+    private void fixDown(int[] input, int index, int endIndex) {
+        int maxIndex;
+        int leftChildIndex = 2 * index + 1;
+        int rightChildIndex = 2 * index + 2;
+
+        if (leftChildIndex > endIndex) {
+            return;
+        }
+
+        if (rightChildIndex > endIndex ||
+            getFrom(input, leftChildIndex) > getFrom(input, rightChildIndex)) {
+            maxIndex = leftChildIndex;
+        } else {
+            maxIndex = rightChildIndex;
+        }
+
+        if (getFrom(input, maxIndex) > getFrom(input, index)) {
+            swap(input, index, maxIndex);
+            fixDown(input, maxIndex, endIndex);
+        }
     }
 
 }
