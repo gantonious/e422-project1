@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by George on 2017-03-04.
@@ -30,8 +31,17 @@ public class PrimaryDataSorter implements DataSorter {
         FileUtils.writeToFile(outputFile, serializedList);
     }
 
+    private double getMemoryFailureHazard() {
+        return memoryAccesses * failureRate;
+    }
+
     private void testMemory() {
-        throw new MemoryFailureException();
+        Random random = new Random(System.currentTimeMillis());
+        int randInt = random.nextInt(1);
+
+        if (randInt >= 0.5 && randInt <= 0.5 + getMemoryFailureHazard()) {
+            throw new MemoryFailureException();
+        }
     }
 
     private int getFrom(int[] data, int index) {
