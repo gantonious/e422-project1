@@ -6,7 +6,7 @@ import java.util.Random;
  * Created by George on 2017-03-04.
  */
 public class DataGenerator {
-    public void generateDate(String fileName, int numToGenerate) {
+    public void generateData(String fileName, int numToGenerate) {
         String serializedList = ArrayUtils.serialize(generateRandomInts(numToGenerate));
         FileUtils.writeToFile(fileName, serializedList);
     }

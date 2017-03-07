@@ -3,18 +3,16 @@
  */
 public class PrimaryDataSorter implements Sorter {
     private int memoryAccesses;
-    private double failureRate;
 
     @Override
     public int sort(int data[]) {
-        prepareForSorting(failureRate);
+        prepareForSorting();
         sortData(data);
         return memoryAccesses;
     }
 
-    private void prepareForSorting(double failureRate) {
+    private void prepareForSorting() {
         this.memoryAccesses = 0;
-        this.failureRate = failureRate;
     }
 
     private int getFrom(int[] data, int index) {

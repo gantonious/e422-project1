@@ -15,6 +15,6 @@ public class GeneratorDriver {
 
     public static void run(String inputFile, int numEntries) {
         DataGenerator dataGenerator = new DataGenerator();
-        dataGenerator.generateDate(inputFile, numEntries);
+        dataGenerator.generateData(inputFile, numEntries);
     }
 }
