@@ -1,4 +1,4 @@
-NATIVECLASSNAME = BackupDataSort
+NATIVECLASSNAME = BackupDataSorter
 LIBNAME = libInsertionSort
 LIBSOURCE = insertionsort.c
 
