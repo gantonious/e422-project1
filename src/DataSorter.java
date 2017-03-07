@@ -54,6 +54,7 @@ public class DataSorter {
         sortWatchdog.startWatch(timeout);
         sortWatchdog.waitOnThread();
 
+        sortingThread.testForTimeout();
         sortingThread.testForMemoryFailure();
         adjudicator.testIsArraySorted(data);
     }

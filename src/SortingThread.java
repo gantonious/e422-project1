@@ -6,19 +6,25 @@ import java.util.Random;
 public class SortingThread extends Thread {
     private int[] data;
     private Sorter sorter;
+    private boolean hasTimedout;
     private int totalMemAccesses;
     private double failureRate;
 
     public SortingThread(Sorter sorter, int[] data, double failureRate) {
         this.sorter = sorter;
         this.data = data;
+        this.hasTimedout = false;
         this.totalMemAccesses = 0;
         this.failureRate = failureRate;
     }
 
     @Override
     public void run() {
-        totalMemAccesses = sorter.sort(data);
+        try {
+            totalMemAccesses = sorter.sort(data);
+        } catch (ThreadDeath threadDeath) {
+            hasTimedout = true;
+        }
     }
 
     private double getMemoryFailureHazard() {
@@ -29,6 +35,12 @@ public class SortingThread extends Thread {
     private double randomDouble(double bound) {
         Random random = new Random(System.currentTimeMillis());
         return bound * random.nextFloat();
+    }
+
+    public void testForTimeout() {
+        if (hasTimedout) {
+            throw new TimeoutException();
+        }
     }
 
     public void testForMemoryFailure() {

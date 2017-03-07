@@ -7,7 +7,7 @@ public class SortAdjudicator {
             if (i == data.length -1) {
                 break;
             }
-            if (data[i] >= data[i + 1]) {
+            if (data[i] > data[i + 1]) {
                 throw new DataNotSortedException();
             }
         }

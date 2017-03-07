@@ -23,8 +23,10 @@ public class Watchdog extends TimerTask {
         try {
             threadToWatch.join();
             cancelWatch();
-        } catch (InterruptedException e) {
+        } catch (ThreadDeath e) {
             throw new TimeoutException();
+        } catch (InterruptedException e) {
+            throw new RuntimeException();
         }
     }
 
