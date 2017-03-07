@@ -7,7 +7,7 @@ public class SortDriver {
         String outputFile = args[1];
         double primaryFailRate = Double.parseDouble(args[2]);
         double backupFailRate = Double.parseDouble(args[3]);
-        double timeout = Double.parseDouble(args[4]);
+        long timeout = Long.parseLong(args[4]);
 
         Sorter primarySort = new PrimaryDataSorter();
         Sorter backupSort = new BackupDataSort();

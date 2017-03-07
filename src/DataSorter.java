@@ -1,3 +1,5 @@
+import java.util.Timer;
+
 /**
  * Created by George on 2017-03-06.
  */
@@ -16,7 +18,7 @@ public class DataSorter {
                         String outputFile,
                         double primaryFailureRate,
                         double backupFailureRate,
-                        double timeout) {
+                        long timeout) {
 
         int[] data = loadInputArray(inputFile);
 
@@ -29,7 +31,7 @@ public class DataSorter {
         writeOutputArray(outputFile, data);
     }
 
-    private void executePrimarySort(int[] data, double failureRate, double timeout) {
+    private void executePrimarySort(int[] data, double failureRate, long timeout) {
         try {
             executeSortingStrategy(data, primarySorter, failureRate, timeout);
         } catch (Exception e) {
@@ -37,7 +39,7 @@ public class DataSorter {
         }
     }
 
-    private void executeBackupSort(int[] data, double failureRate, double timeout) {
+    private void executeBackupSort(int[] data, double failureRate, long timeout) {
         try {
             executeSortingStrategy(data, backupSorter, failureRate, timeout);
         } catch (Exception e) {
@@ -45,7 +47,12 @@ public class DataSorter {
         }
     }
 
-    private void executeSortingStrategy(int[] data, Sorter sorter, double failureRate, double timeout) {
+    private void executeSortingStrategy(int[] data, Sorter sorter, double failureRate, long timeout) {
+        Timer sortingTimer = new Timer();
+        SortingThread sortingThread = new SortingThread(sorter, data);
+        Watchdog sortWatchDog = new Watchdog(sortingThread);
+
+        sortingTimer.schedule(sortWatchDog, timeout);
 
     }
 
