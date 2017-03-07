@@ -45,7 +45,8 @@ void swap(int *data, int index1, int index2) {
 }
 
 void insertion_sort(int *data, int length) {
-    for (int i = 0; i < length; i++) {
+    int i = 0;
+    for (i = 0; i < length; i++) {
         int item_value = get_from(data, i);
         int compare_index = i;
 
