@@ -8,7 +8,7 @@ void set_to(int *data, int index, int value);
 void prepare_sort();
 void insertion_sort(int *data, int length);
 
-JNIEXPORT jint JNICALL Java_BackupDataSort_sort
+JNIEXPORT jint JNICALL Java_BackupDataSorter_sort
 (JNIEnv *env, jobject object, jintArray data) {
     int length;
     int *array;
