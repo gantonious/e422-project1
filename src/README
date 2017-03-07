@@ -14,7 +14,6 @@ Running:
 Before running make sure you include the current directory in you library path:
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.
 
-
 To generate the data do:
 java GeneratorDriver <input_filename> <num_entries>
 
