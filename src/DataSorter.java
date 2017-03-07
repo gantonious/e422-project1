@@ -23,6 +23,8 @@ public class DataSorter {
         try {
             executePrimarySort(data, primaryFailureRate, timeout);
         } catch (LocalException e) {
+            // reload data from last good state
+            data = loadInputArray(inputFile);
             executeBackupSort(data, backupFailureRate, timeout);
         }
 

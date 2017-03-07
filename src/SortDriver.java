@@ -3,11 +3,24 @@
  */
 public class SortDriver {
     public static void main(String[] args) {
-        String inputFile = args[0];
-        String outputFile = args[1];
-        double primaryFailRate = Double.parseDouble(args[2]);
-        double backupFailRate = Double.parseDouble(args[3]);
-        long timeout = Long.parseLong(args[4]);
+        try {
+            String inputFile = args[0];
+            String outputFile = args[1];
+            double primaryFailRate = Double.parseDouble(args[2]);
+            double backupFailRate = Double.parseDouble(args[3]);
+            long timeout = Long.parseLong(args[4]);
+
+            run(inputFile, outputFile, primaryFailRate, backupFailRate, timeout);
+        } catch (Exception e) {
+            System.out.println("Usage: java SortDriver <input_filename> <output_filename> <primary_fail_rate> <backup_fail_rate> <timeout>");
+        }
+    }
+
+    public static void run(String inputFile,
+                           String outputFile,
+                           double primaryFailRate,
+                           double backupFailRate,
+                           long timeout) {
 
         System.loadLibrary("InsertionSort");
 

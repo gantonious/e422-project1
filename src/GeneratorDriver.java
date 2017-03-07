@@ -3,9 +3,17 @@
  */
 public class GeneratorDriver {
     public static void main(String[] args) {
-        String inputFile = args[0];
-        int numEntries = Integer.parseInt(args[1]);
+        try {
+            String inputFile = args[0];
+            int numEntries = Integer.parseInt(args[1]);
 
+            run(inputFile, numEntries);
+        } catch (Exception e) {
+            System.out.println("Usage: java GeneratorDriver <input_filename> <num_entries>");
+        }
+    }
+
+    public static void run(String inputFile, int numEntries) {
         DataGenerator dataGenerator = new DataGenerator();
         dataGenerator.generateDate(inputFile, numEntries);
     }
