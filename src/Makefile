@@ -12,5 +12,8 @@ linux:
 	javah $(NATIVECLASSNAME)
 	gcc -I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/linux -shared -fpic -o $(LIBNAME).so $(LIBSOURCE)
 
+package:
+	tar -cvzf e422-project1-antoniou.tar.gz *.c *.java Makefile README
+
 clean:
 	rm -f *.class $(NATIVECLASSNAME).h *.dylib *.so
