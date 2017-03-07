@@ -1,0 +1,22 @@
+ECE 422 Project 1
+George Antonious (1396458)
+
+Building:
+
+To build on Linux do:
+make linux
+
+To build on OS X do:
+make darwin
+
+Running:
+
+Before running make sure you include the current directory in you library path:
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.
+
+
+To generate the data do:
+java GeneratorDriver <input_filename> <num_entries>
+
+To attempt to sort the data do:
+java SortDriver <input_filename> <output_filename> <primary_fail_rate> <backup_fail_rate> <timeout>
