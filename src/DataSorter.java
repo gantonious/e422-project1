@@ -1,5 +1,3 @@
-import java.util.Timer;
-
 /**
  * Created by George on 2017-03-06.
  */
@@ -48,12 +46,21 @@ public class DataSorter {
     }
 
     private void executeSortingStrategy(int[] data, Sorter sorter, double failureRate, long timeout) {
-        Timer sortingTimer = new Timer();
-        SortingThread sortingThread = new SortingThread(sorter, data);
-        Watchdog sortWatchDog = new Watchdog(sortingThread);
+        SortingThread sortingThread = new SortingThread(sorter, data, failureRate);
+        Watchdog sortWatchdog = new Watchdog(sortingThread);
 
-        sortingTimer.schedule(sortWatchDog, timeout);
+        sortWatchdog.startWatch(timeout);
+        sortingThread.start();
 
+        try {
+            sortingThread.join();
+            sortWatchdog.cancelWatch();
+        } catch (InterruptedException e) {
+            throw new TimeoutException();
+        }
+
+        sortingThread.testForMemoryFailure();
+        adjudicator.testIsArraySorted(data);
     }
 
     private int[] loadInputArray(String inputFile) {

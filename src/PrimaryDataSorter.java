@@ -19,24 +19,6 @@ public class PrimaryDataSorter implements Sorter {
         this.failureRate = failureRate;
     }
 
-    private double getMemoryFailureHazard() {
-        return memoryAccesses * failureRate;
-    }
-
-    // from: http://stackoverflow.com/a/6078211
-    private double randomDouble(double bound) {
-        Random random = new Random(System.currentTimeMillis());
-        return bound * random.nextFloat();
-    }
-
-    private void testMemory() {
-        double randDouble = randomDouble(1.0);
-
-        if (randDouble >= 0.5 && randDouble <= 0.5 + getMemoryFailureHazard()) {
-            throw new MemoryFailureException();
-        }
-    }
-
     private int getFrom(int[] data, int index) {
         memoryAccesses += 1;
         return data[index];
