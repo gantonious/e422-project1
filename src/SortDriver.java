@@ -25,7 +25,7 @@ public class SortDriver {
         System.loadLibrary("InsertionSort");
 
         Sorter primarySort = new PrimaryDataSorter();
-        Sorter backupSort = new BackupDataSort();
+        Sorter backupSort = new BackupDataSorter();
         SortAdjudicator adjudicator = new SortAdjudicator();
 
         DataSorter dataSorter = new DataSorter(primarySort, backupSort, adjudicator);
