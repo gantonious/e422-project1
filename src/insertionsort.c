@@ -1,14 +1,15 @@
 #include "BackupDataSort.h"
 
-void test_memory();
+int memoryAccesses = 0;
+
 int get_from(int *data, int index);
 void set_to(int *data, int index, int value);
 
-void prepare_sort(double failure_rate);
+void prepare_sort();
 void insertion_sort(int *data, int length);
 
-JNIEXPORT void JNICALL Java_BackupDataSort_sort
-(JNIEnv *env, jobject object, jintArray data, jdouble failure_rate) {
+JNIEXPORT jint JNICALL Java_BackupDataSort_sort
+(JNIEnv *env, jobject object, jintArray data) {
     int length;
     int *array;
     jboolean *is_copy = 0;
@@ -16,32 +17,23 @@ JNIEXPORT void JNICALL Java_BackupDataSort_sort
     length = (int) (*env)->GetArrayLength(env, data);
     array = (int *) (*env)->GetIntArrayElements(env, data, is_copy);
 
-    prepare_sort((double) failure_rate);
+    prepare_sort();
     insertion_sort(array, length);
 
     (*env)->SetIntArrayRegion(env, data, 0, (jsize) length, (jint*) array);
+    return memoryAccesses;
 }
 
-int memoryAccesses = 0;
-double failure_rate = 0;
-
-void prepare_sort(double rate) {
+void prepare_sort() {
     memoryAccesses = 0;
-    failure_rate = rate;
-}
-
-void test_memory() {
-
 }
 
 int get_from(int *data, int index) {
-    test_memory();
     memoryAccesses++;
     return data[index];
 }
 
 void set_to(int *data, int index, int value) {
-    test_memory();
     memoryAccesses++;
     data[index] = value;
 }

@@ -8,9 +8,10 @@ public class PrimaryDataSorter implements Sorter {
     private double failureRate;
 
     @Override
-    public void sort(int data[], double failureRate) {
+    public int sort(int data[]) {
         prepareForSorting(failureRate);
         sortData(data);
+        return memoryAccesses;
     }
 
     private void prepareForSorting(double failureRate) {
@@ -37,13 +38,11 @@ public class PrimaryDataSorter implements Sorter {
     }
 
     private int getFrom(int[] data, int index) {
-        testMemory();
         memoryAccesses += 1;
         return data[index];
     }
 
     private void setTo(int[] data, int index, int item) {
-        testMemory();
         memoryAccesses += 1;
         data[index] = item;
     }

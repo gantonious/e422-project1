@@ -4,14 +4,15 @@
 public class Driver {
     public static void main(String[] args) {
         DataGenerator dataGenerator = new DataGenerator();
-        Sorter dataSorter = new BackupDataSort();
+        Sorter dataSorter = new PrimaryDataSorter();
 
         System.loadLibrary("InsertionSort");
 
         dataGenerator.generateDate("test.txt", 200);
         int[] inputArray = loadInputArray("test.txt");
-        dataSorter.sort(inputArray, 2);
+        int memAcesses = dataSorter.sort(inputArray);
         writeOutputArray("sortedTest.txt", inputArray);
+        System.out.println(memAcesses);
     }
 
     private static int[] loadInputArray(String inputFile) {
