@@ -9,11 +9,26 @@ public class SortDriver {
         double backupFailRate = Double.parseDouble(args[3]);
         long timeout = Long.parseLong(args[4]);
 
+        System.loadLibrary("InsertionSort");
+
         Sorter primarySort = new PrimaryDataSorter();
         Sorter backupSort = new BackupDataSort();
         SortAdjudicator adjudicator = new SortAdjudicator();
 
         DataSorter dataSorter = new DataSorter(primarySort, backupSort, adjudicator);
-        dataSorter.execute(inputFile, outputFile, primaryFailRate, backupFailRate, timeout);
+
+        boolean didSortFail = false;
+
+        try {
+            System.out.println("Attempting to sort data...");
+            dataSorter.execute(inputFile, outputFile, primaryFailRate, backupFailRate, timeout);
+        } catch (Exception e) {
+            didSortFail = true;
+            System.out.println("Failed to sort data.");
+        }
+
+        if (!didSortFail) {
+            System.out.println("Data successfully sorted!");
+        }
     }
 }

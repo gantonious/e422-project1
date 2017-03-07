@@ -16,6 +16,16 @@ public class Watchdog extends TimerTask {
 
     public void startWatch(long timeout) {
         timeoutTimer.schedule(this, timeout);
+        threadToWatch.start();
+    }
+
+    public void waitOnThread() {
+        try {
+            threadToWatch.join();
+            cancelWatch();
+        } catch (InterruptedException e) {
+            throw new TimeoutException();
+        }
     }
 
     public void cancelWatch() {

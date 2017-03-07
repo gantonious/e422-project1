@@ -33,6 +33,7 @@ public class DataSorter {
         try {
             executeSortingStrategy(data, primarySorter, failureRate, timeout);
         } catch (Exception e) {
+            System.out.println("Primary Sorting Strategy failed due to: " + e.toString());
             throw new LocalException();
         }
     }
@@ -41,6 +42,7 @@ public class DataSorter {
         try {
             executeSortingStrategy(data, backupSorter, failureRate, timeout);
         } catch (Exception e) {
+            System.out.println("Backup Sorting Strategy failed due to: " + e.toString());
             throw new FailureException();
         }
     }
@@ -50,14 +52,7 @@ public class DataSorter {
         Watchdog sortWatchdog = new Watchdog(sortingThread);
 
         sortWatchdog.startWatch(timeout);
-        sortingThread.start();
-
-        try {
-            sortingThread.join();
-            sortWatchdog.cancelWatch();
-        } catch (InterruptedException e) {
-            throw new TimeoutException();
-        }
+        sortWatchdog.waitOnThread();
 
         sortingThread.testForMemoryFailure();
         adjudicator.testIsArraySorted(data);
